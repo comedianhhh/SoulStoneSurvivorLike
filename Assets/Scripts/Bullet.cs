@@ -1,21 +1,22 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// A game object representing a projectile and apply damage when hit
-/// It implements the IDoDamage interface, so when hit the object knows what
-/// methods to use
+/// Represents a projectile that can deal damage upon impact. Implements the IDoDamage interface to specify damage dealing behavior.
 /// </summary>
 public class Bullet : MonoBehaviour, IDoDamage
 {
     /// <summary>
-    /// Expose two properties, one to pass a prefab that can be used as special effect
-    /// and the amount of damage applied
+    /// A prefab representing the visual effect (e.g., a bullet hole) to instantiate upon bullet impact.
     /// </summary>
     [SerializeField] private GameObject bulletHole;
+
+    /// <summary>
+    /// The amount of damage this bullet applies to the target on impact.
+    /// </summary>
     [SerializeField] private int damage = 35;
 
     /// <summary>
-    /// Make sure the game object is destroyed after 3 seconds
+    /// Automatically destroys the bullet game object 3 seconds after it has been instantiated.
     /// </summary>
     private void Start()
     {
@@ -23,7 +24,16 @@ public class Bullet : MonoBehaviour, IDoDamage
     }
 
     /// <summary>
-    /// Destroy this game object after colliding 
+    /// Sets the damage value of the bullet. Can be used to dynamically adjust bullet damage.
+    /// </summary>
+    /// <param name="damage">The new damage value for the bullet.</param>
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
+    }
+
+    /// <summary>
+    /// Destroys the bullet game object upon collision with another object.
     /// </summary>
     private void OnCollisionEnter()
     {
@@ -31,14 +41,14 @@ public class Bullet : MonoBehaviour, IDoDamage
     }
 
     /// <summary>
-    /// Return tha amount of damage the bullet (projectile) will apply when hit
+    /// Retrieves the amount of damage this bullet will apply upon impact.
     /// </summary>
-    /// <returns>int: the damage amount</returns>
-    public int GetDamage() { return damage; }
+    /// <returns>The damage value of the bullet.</returns>
+    public int GetDamage() => damage;
 
     /// <summary>
-    /// Return the game object (prefab) that can be used to apply a special effect
+    /// Retrieves the prefab used for the impact visual effect (e.g., bullet hole).
     /// </summary>
-    /// <returns>GameObject: the prefab</returns>
-    public GameObject GetHitPrefab() { return bulletHole; }
+    /// <returns>The prefab used for the impact effect.</returns>
+    public GameObject GetHitPrefab() => bulletHole;
 }

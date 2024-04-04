@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &276160514803449969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7118071268238092825}
+  - component: {fileID: 6824355411539124857}
+  m_Layer: 0
+  m_Name: PlayerWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7118071268238092825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276160514803449969}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6824355411539124857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276160514803449969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663a6001f6006484f8e8d7246c48ef76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 4621480608742749529, guid: 740a53a60afe7e542a9bd0d7fa84a2cc, type: 3}
+  newBullet:
+    m_AssetGUID: 740a53a60afe7e542a9bd0d7fa84a2cc
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  audioClipList:
+  - {fileID: 11400000, guid: dc388911c8887154e817e6fd42dbc39e, type: 2}
+  - {fileID: 11400000, guid: 9f13db5dcb55ea249b10cdbe3b66ce2c, type: 2}
+  - {fileID: 11400000, guid: 8fd839a155421ca4cacd5259d2fe2664, type: 2}
+  - {fileID: 11400000, guid: ffb748c70075d9646b8271713480b232, type: 2}
+  currentBulletData: {fileID: 11400000, guid: 2ae46b19e07704b4f838be1904504dbe, type: 2}
+  bulletSpeed: 20
+  bulletDamage: 25
+  shootInterval: 0.5

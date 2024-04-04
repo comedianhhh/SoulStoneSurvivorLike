@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// Class created to control the player movement, animation, and attack.
@@ -11,10 +11,9 @@ public class PlayerController : MonoBehaviour
 {
     // Fields for player components and settings
     [SerializeField] private Transform weapon;
-    [SerializeField] private Rigidbody bullet;
-    [SerializeField] private AssetReference newBullet;
-    [SerializeField] private List<AudioSO> audioClipList;
-    private AudioSource audioSource;
+    [SerializeField] private PlayerWeapon playerWeapon;
+    [SerializeField] private Canvas canvas;
+
     private PlayerInputActions playerInputActions;
     private Animator animator;
     private float moveSpeed = 5f;
@@ -32,8 +31,8 @@ public class PlayerController : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         animator = GetComponentInChildren<Animator>();
-        audioSource = GetComponentInChildren<AudioSource>();
         currentState = new IdleState();
+        canvas ??= gameObject.GetComponentInChildren<Canvas>();
     }
 
     private void Start()
@@ -82,39 +81,10 @@ public class PlayerController : MonoBehaviour
         {
             if (!MouseUtil.Instance.IsMouseAvailable()) return;
             Vector3 targetDirection = (MouseUtil.Instance.GetMousePosition() - transform.position).normalized;
-            float bulletHeight = Random.Range(0.5f, 1.8f);
-            Vector3 bulletPosition = transform.position + targetDirection + (Vector3.up * bulletHeight);
-            //Rigidbody p = Instantiate(bullet, bulletPosition, Quaternion.identity);
-            //p.velocity = targetDirection * 20f;
-            //HandleWeaponSound();
-
-            // Use AssetManager to instantiate the bullet
-            AssetManager.Instance.Inst(newBullet, bulletPosition, Quaternion.identity,
-                (instGO) => 
-                {
-                    if (instGO != null)
-                    {
-                        Rigidbody rb = instGO.GetComponent<Rigidbody>(); 
-                        if (rb != null)
-                        {
-                            rb.velocity = targetDirection * 20f;
-                        }
-                        HandleWeaponSound();
-                    }
-                });
+            playerWeapon?.TryShoot(targetDirection);
         }
     }
 
-    /// <summary>
-    /// Play the weapon sound after shooting a projectile
-    /// </summary>
-    private void HandleWeaponSound()
-    {
-        //audioSource.clip = audioClipList[Random.Range(0, audioClipList.Count)];
-        //audioSource.Play();
-        AudioSO clip = audioClipList[Random.Range(0, audioClipList.Count)];
-        AudioManager.Instance.PlaySound(clip);
-    }
 
     /// <summary>
     /// Get the input and cast a capule to verify if the path is not blocked. 

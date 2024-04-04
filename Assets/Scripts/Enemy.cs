@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     /// It also expose propertis for easy access through the Inspector
     /// </summary>
     [SerializeField, Range(1, 5)] private float moveSpeed = 1f;
-    [SerializeField, Range(7, 10)]private float turnSpeed = 10f;
+//    [SerializeField, Range(7, 10)]private float turnSpeed = 10f;
     [SerializeField, Range(25, 100)] private float maxHealth = 100f;
     [SerializeField, Range(1, 5)] private float maxSleep = 5f;
     [SerializeField] private float numHealth = 0f;
@@ -135,13 +135,20 @@ public class Enemy : MonoBehaviour
     private void TakeDamage(float damage)
     {
         numHealth -= damage;
-        if (numHealth < 0) { Destroy(gameObject); }
         float health = numHealth / maxHealth;
         healthBar.UpdateHealth(health);
-        if (health <= 0.50)
+        if (numHealth <= 0) {
+            Die();
+            Destroy(gameObject); 
+        } else if (health <= 0.50)
         {
             SetMovementStrategy(new DirectChaseStrategy());
         }
+    }
+
+    private void Die()
+    {
+        Instantiate(drop, new Vector3(transform.position.x, 1, transform.position.z), Quaternion.identity);
     }
 
     /// <summary>
@@ -152,7 +159,6 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void OnDestroy()
     {
-        Instantiate(drop, new Vector3(transform.position.x, 1, transform.position.z), Quaternion.identity);
         enemiesManager?.Remove(gameObject);
     }
 
